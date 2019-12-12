@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hq.modules.sys.dao.SysTableDao">
+    <select id="listTable"  resultType="com.hq.modules.sys.entity.SysTableEntity">
+        select t.table_name tablename,nvl(f.comments,t.table_name) comments from user_tables t inner join user_tab_comments f on  t.table_name=f.table_name
+    </select>
+
+    <select id="listField"  resultType="com.hq.modules.sys.entity.SysFieldEntity">
+        select t.column_name field,t.Data_type type,nvl(a.comments,t.column_name) comments
+        from user_tab_columns t join user_col_comments a on t.TABLE_NAME =a.TABLE_NAME and t.column_name = a.COLUMN_NAME and t.table_name=#{tablename}
+    </select>
+
+    <!--复杂查询sql构建-->
+    <select id="multipleQuery" resultType="hashmap">
+        select
+        <foreach collection="fields" item="field" separator=",">
+            ${field}
+        </foreach>
+        from  ${tablename}
+        <where>
+          <foreach collection="conditionsArray" item="conditionsTmp" open="(" close=")" separator="or">
+              <foreach collection="conditionsTmp" item="condition"   separator="and">
+                  <!-- 字符串类型-->
+                <if test="condition.type=='VARCHAR2'">
+                      ${condition.field} ${condition.symbol}
+                    <choose>
+                        <when test="condition.symbol=='like'|| condition.symbol=='not like'">'%${condition.textvalue}%'</when>
+                        <otherwise>'${condition.textvalue}'</otherwise>
+                    </choose>
+                 </if>
+                  <!-- 数值类型-->
+                  <if test="condition.type=='NUMBER'">
+                          <choose>
+                              <when test="condition.symbol=='bt1'">
+                                  (${condition.field}&gt;#{condition.numvalue1} and ${condition.field}&lt;#{condition.numvalue2})
+                              </when>
+                              <when test="condition.symbol=='bt2'">
+                                  (${condition.field}&gt;#{condition.numvalue1} and ${condition.field}&lt;=#{condition.numvalue2})
+                              </when>
+                              <when test="condition.symbol=='bt3'">
+                                  (${condition.field}&gt;=#{condition.numvalue1} and ${condition.field}&lt; #{condition.numvalue2})
+                              </when>
+                              <when test="condition.symbol=='bt4'">
+                                  (${condition.field}&gt;= #{condition.numvalue1} and ${condition.field}&lt;=#{condition.numvalue2})
+                              </when>
+                              <otherwise>
+                                  ${condition.field} ${condition.symbol} ${condition.numvalue1}
+                              </otherwise>
+                          </choose>
+                  </if>
+                  <!-- 日期类型-->
+                  <if test="condition.type=='DATE'">
+                      <choose>
+                          <when test="condition.symbol=='bt1'">
+                              (${condition.field}&gt;to_date(#{condition.datevalue1},'${condition.dateformat}') and ${condition.field}&lt; to_date(#{condition.datevalue2},'${condition.dateformat}'))
+                          </when>
+                          <when test="condition.symbol=='bt2'">
+                              (${condition.field}&gt;to_date(#{condition.datevalue1},'${condition.dateformat}') and ${condition.field}&lt;= to_date(#{condition.datevalue2},'${condition.dateformat}'))
+                          </when>
+                          <when test="condition.symbol=='bt3'">
+                              (${condition.field}&gt;=to_date(#{condition.datevalue1},'${condition.dateformat}') and ${condition.field}&lt;to_date(#{condition.datevalue2},'${condition.dateformat}'))
+                          </when>
+                          <when test="condition.symbol=='bt4'">
+                              (${condition.field}&gt;=to_date(#{condition.datevalue1},'${condition.dateformat}') and ${condition.field}&lt;= to_date(#{condition.datevalue2},'${condition.dateformat}'))
+                          </when>
+                          <otherwise>
+                              ${condition.field} ${condition.symbol} to_date(#{condition.datevalue1},'${condition.dateformat}')
+                          </otherwise>
+                      </choose>
+                  </if>
+              </foreach>
+          </foreach>
+        </where>
+        <if test="ranks!=null and ranks.size>0">
+        order by
+        <foreach collection="ranks" item = "rank" separator=",">
+         ${rank.field} ${rank.type}
+        </foreach>
+        </if>
+     </select>
+    <!--复杂分组查询 -->
+    <select id="multipleQueryByGroup" resultType="hashmap">
+
+    </select>
+</mapper>
