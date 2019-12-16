@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -15,6 +18,9 @@ import java.util.List;
 /**
  * 角色
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("sys_role")
 @KeySequence(value="SEQ_SYS_ROLE",clazz = Long.class)
 public class SysRoleEntity implements Serializable {
@@ -49,77 +55,5 @@ public class SysRoleEntity implements Serializable {
 	 * 创建时间
 	 */
 	private Date createTime;
-
-	/**
-	 * 设置：
-	 * @param roleId 
-	 */
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
-
-	/**
-	 * 获取：
-	 * @return Long
-	 */
-	public Long getRoleId() {
-		return roleId;
-	}
-	
-	/**
-	 * 设置：角色名称
-	 * @param roleName 角色名称
-	 */
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-
-	/**
-	 * 获取：角色名称
-	 * @return String
-	 */
-	public String getRoleName() {
-		return roleName;
-	}
-	
-	/**
-	 * 设置：备注
-	 * @param remark 备注
-	 */
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	/**
-	 * 获取：备注
-	 * @return String
-	 */
-	public String getRemark() {
-		return remark;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public List<Long> getMenuIdList() {
-		return menuIdList;
-	}
-
-	public void setMenuIdList(List<Long> menuIdList) {
-		this.menuIdList = menuIdList;
-	}
-
-	public Long getCreateUserId() {
-		return createUserId;
-	}
-
-	public void setCreateUserId(Long createUserId) {
-		this.createUserId = createUserId;
-	}
 	
 }

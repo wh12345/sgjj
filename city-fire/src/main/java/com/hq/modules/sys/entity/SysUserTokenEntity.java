@@ -3,6 +3,9 @@ package com.hq.modules.sys.entity;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,10 +14,12 @@ import java.util.Date;
 /**
  * 系统用户Token
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("sys_user_token")
 public class SysUserTokenEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
 	//用户ID
 	@TableId(type = IdType.INPUT)
 	private Long userId;
@@ -24,53 +29,4 @@ public class SysUserTokenEntity implements Serializable {
 	private Date expireTime;
 	//更新时间
 	private Date updateTime;
-
-	/**
-	 * 设置：用户ID
-	 */
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-	/**
-	 * 获取：用户ID
-	 */
-	public Long getUserId() {
-		return userId;
-	}
-	/**
-	 * 设置：token
-	 */
-	public void setToken(String token) {
-		this.token = token;
-	}
-	/**
-	 * 获取：token
-	 */
-	public String getToken() {
-		return token;
-	}
-	/**
-	 * 设置：过期时间
-	 */
-	public void setExpireTime(Date expireTime) {
-		this.expireTime = expireTime;
-	}
-	/**
-	 * 获取：过期时间
-	 */
-	public Date getExpireTime() {
-		return expireTime;
-	}
-	/**
-	 * 设置：更新时间
-	 */
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	/**
-	 * 获取：更新时间
-	 */
-	public Date getUpdateTime() {
-		return updateTime;
-	}
 }

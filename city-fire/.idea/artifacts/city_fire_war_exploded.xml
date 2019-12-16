@@ -139,6 +139,7 @@
           <element id="library" level="project" name="Maven: cn.hutool:hutool-all:4.1.1" />
           <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.6.2" />
           <element id="library" level="project" name="Maven: com.qy:wisdk:1.0.0" />
+          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.16.16" />
         </element>
       </element>
       <element id="directory" name="META-INF">

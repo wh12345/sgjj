@@ -55,13 +55,13 @@
         where equipment_id = #{id}
     </update>
 
-    <select id="selectAllType" resultType="String">
+    <select id="selectAllType" resultType="string">
         select  DISTINCT belong_typename from cf_equipment
     </select>
 
-    <select id="selectAllCommunity"  resultType="String">
-       select  DISTINCT community from cf_equipment
-       order BY community,gmt_create ASC
+    <select id="selectAllCommunity"  resultType="string">
+       select DISTINCT * from (select  community from cf_equipment
+       order BY community,gmt_create ASC)
     </select>
 
     <select id="statisticsbydate" resultType="com.hq.modules.operate.entity.EquipmentStatistics">

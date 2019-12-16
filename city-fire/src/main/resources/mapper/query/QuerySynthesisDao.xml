@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.hq.modules.sys.dao.SysTableDao">
-    <select id="listTable"  resultType="com.hq.modules.sys.entity.SysTableEntity">
+<mapper namespace="com.hq.modules.query.dao.QuerySynthesisDao">
+    <select id="listTable"  resultType="com.hq.modules.query.entity.QueryTableEntity">
         select t.table_name tablename,nvl(f.comments,t.table_name) comments from user_tables t inner join user_tab_comments f on  t.table_name=f.table_name
     </select>
 
-    <select id="listField"  resultType="com.hq.modules.sys.entity.SysFieldEntity">
+    <select id="listField"  resultType="com.hq.modules.query.entity.QueryFieldEntity">
         select t.column_name field,t.Data_type type,nvl(a.comments,t.column_name) comments
         from user_tab_columns t join user_col_comments a on t.TABLE_NAME =a.TABLE_NAME and t.column_name = a.COLUMN_NAME and t.table_name=#{tablename}
     </select>

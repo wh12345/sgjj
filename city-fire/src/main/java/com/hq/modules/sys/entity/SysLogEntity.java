@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.KeySequence;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,6 +17,9 @@ import java.util.Date;
 /**
  * 系统日志
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("sys_log")
 @KeySequence(value="SEQ_SYS_LOG",clazz = Long.class)
 public class SysLogEntity implements Serializable {
@@ -34,97 +40,4 @@ public class SysLogEntity implements Serializable {
 	private String ip;
 	//创建时间
 	private Date createDate;
-
-	/**
-	 * 设置：
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-	/**
-	 * 获取：
-	 */
-	public Long getId() {
-		return id;
-	}
-	/**
-	 * 设置：用户名
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	/**
-	 * 获取：用户名
-	 */
-	public String getUsername() {
-		return username;
-	}
-	/**
-	 * 设置：用户操作
-	 */
-	public void setOperation(String operation) {
-		this.operation = operation;
-	}
-	/**
-	 * 获取：用户操作
-	 */
-	public String getOperation() {
-		return operation;
-	}
-	/**
-	 * 设置：请求方法
-	 */
-	public void setMethod(String method) {
-		this.method = method;
-	}
-	/**
-	 * 获取：请求方法
-	 */
-	public String getMethod() {
-		return method;
-	}
-	/**
-	 * 设置：请求参数
-	 */
-	public void setParams(String params) {
-		this.params = params;
-	}
-	/**
-	 * 获取：请求参数
-	 */
-	public String getParams() {
-		return params;
-	}
-	/**
-	 * 设置：IP地址
-	 */
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-	/**
-	 * 获取：IP地址
-	 */
-	public String getIp() {
-		return ip;
-	}
-	/**
-	 * 设置：创建时间
-	 */
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-	/**
-	 * 获取：创建时间
-	 */
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public Long getTime() {
-		return time;
-	}
-
-	public void setTime(Long time) {
-		this.time = time;
-	}
 }

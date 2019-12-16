@@ -1,9 +1,16 @@
 
 package com.hq.modules.sys.form;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 密码表单
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PasswordForm {
     /**
      * 原密码
@@ -14,19 +21,4 @@ public class PasswordForm {
      */
     private String newPassword;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
 }
