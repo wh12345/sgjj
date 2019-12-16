@@ -1,0 +1,13 @@
+1.分配表空间、创建用户、授权
+	create tablespace SM     
+	datafile  'D:\app\Becauseofyou\oradata\sm.dbf'  
+	size 1024m  
+	autoextend on  next 32m maxsize 2048m;
+	create user smadmin identified by oracleadmin profile default default tablespace sm account unlock;
+	grant connect,resource to smadmin;
+	grant create session to smadmin
+2.授权目录(sm.dmp文件所有在目录)
+	create directory data_dir as 'G:\test' 
+	grant read,write on directory data_dir to smadmin
+3.导入smadmin用户下数据库所有对象
+	impdp smadmin/oracleadmin schemas=smadmin dumpfile=sm.dmp directory=data_dir logfile=sm.log
