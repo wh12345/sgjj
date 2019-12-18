@@ -748,3 +748,19 @@ comment on column wi_api.type is '请求类型 目前只支持post、get';
 comment on column wi_api.active is '接口状态';
 comment on column wi_api.remark is '备注';
 create sequence seq_wi_api;
+
+
+create table wi_user(
+      user_id integer primary key,
+      username varchar2(20),
+      password varchar2(64),
+      serviceids varchar2(128),
+      create_time date
+ )
+comment on table wi_user is '接口用户表';
+comment on column wi_user.user_id is '接口用户id';
+comment on column wi_user.username is '用户名';
+comment on column wi_user.password is '密码';
+comment on column wi_user.serviceids is '用户可访问的服务';
+comment on column wi_user.create_time is '创建时间';
+create sequence seq_wi_user;
