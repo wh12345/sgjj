@@ -6,8 +6,11 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.toolkit.StringUtils;
 import com.hq.common.utils.PageUtils;
 import com.hq.common.utils.Query;
+import com.hq.common.utils.R;
 import com.hq.modules.wi.dao.WiApiDao;
+import com.hq.modules.wi.dao.WiUserDao;
 import com.hq.modules.wi.entity.WiApiEntity;
+import com.hq.modules.wi.entity.WiUserEntity;
 import com.hq.modules.wi.proxy.ApiProxy;
 import com.hq.modules.wi.service.ApiService;
 import com.qy.api.RequestApi;
@@ -20,6 +23,7 @@ import org.springframework.util.ResourceUtils;
 import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,29 +36,41 @@ public class ApiServiceImpl extends ServiceImpl<WiApiDao,WiApiEntity> implements
     @Autowired
     private ApiProxy proxy;
     @Autowired
+    private WiUserDao userDao;
+    @Autowired
     private WiApiDao wiApiDao;
     @Override
-    public String requestApi(String servicename,String  data) {
+    public R requestApi(String servicename, String  data, Long userId,String type) {
+        R r =  null;
+        WiUserEntity userEntity = userDao.selectById(userId);
+        String[] strings = userEntity.getServiceids().split(",");
+        List list = Arrays.asList(strings);
         //数据库查询
         RequestApi api = null;
         WiApiEntity wiApiEntity = new WiApiEntity();
         wiApiEntity.setServicename(servicename);
         //wiApiEntity.setActive(1);
         wiApiEntity = wiApiDao.selectOne(wiApiEntity);
-        if(wiApiEntity==null) {
-           return "-1";
+        boolean flag = list.contains(wiApiEntity.getId());
+        if(!flag) {
+            r = R.error(-1,"你没有访问该接口的权限!");;
+        }else if(!type.equals(wiApiEntity.getType())) {
+            r = R.error(-1,"该接口是"+wiApiEntity.getType()+"接口!");;
+        }else if(wiApiEntity==null) {
+            r = R.error(-1,"服务接口不存在!");;
         }else if(wiApiEntity.getActive()==0) {
-            return "0";
+            r = R.error(-1,"接口未激活!");
         }
         try {
             String path = ResourceUtils.getURL("classpath:").getPath();
             String buildOutput = URLDecoder.decode(path.substring(1),"UTF-8")+"com/hq/modules/wi/proxy";
             String fullClassName = wiApiEntity.getServicename().substring(0,1).toUpperCase()+wiApiEntity.getServicename().substring(1);
             api = (RequestApi) proxy.newProxyInstance(fullClassName,wiApiEntity.getPath(),"UTF-8",buildOutput);
+            r = R.ok().put("data",api.run(data));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return api.run(data);
+        return r;
     }
 
     @Override

@@ -1,20 +1,20 @@
 package com.hq.modules.wi.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.hq.common.exception.RRException;
 import com.hq.common.utils.PageUtils;
 import com.hq.common.utils.R;
 import com.hq.modules.wi.entity.WiApiEntity;
-import com.hq.modules.wi.proxy.ApiProxy;
 import com.hq.modules.wi.service.ApiService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.misc.BASE64Decoder;
-import java.io.*;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Map;
 
 /**
@@ -26,44 +26,8 @@ public class ApiController {
     @Value(value = "${cityfire.wi.basepath}")
     private String basepath;
     @Autowired
-    private ApiProxy apiProxy;
-    @Autowired
     private ApiService apiService;
-    @GetMapping("/get/{servicename}/{data}")
-    public R getApi(@PathVariable String servicename,@PathVariable String  data) {
-        R r= null;
-        try {
-            if("params".equals(data)) {
-                return R.error("参数params为base64加密的json字符串");
-            }
-            byte[] bytes = new BASE64Decoder().decodeBuffer(data);
-            data = new String(bytes,"UTF-8");
-            System.out.println("servicename"+servicename+"data"+data);
-            String resultData = apiService.requestApi(servicename,data);
-            if("-1".equals(resultData)) {
-                return R.error(-1,"服务接口不存在");
-            }else if("0".equals(resultData)) {
-                return R.error(-1,"接口未激活");
-            }
-            r = R.ok().put("data",resultData);
-        } catch (IOException e) {
-            r = R.error();
-            e.printStackTrace();
-        }
-        return r;
 
-    }
-    @PostMapping("/post/{servicename}")
-    public R postApi(@PathVariable String servicename,@RequestBody String data) {
-        JSONObject json = JSON.parseObject(data);
-        String resultData =apiService.requestApi(servicename,json.getString("name"));
-        if("-1".equals(resultData)) {
-            return R.error(-1,"服务接口不存在");
-        }else if("0".equals(resultData)) {
-            return R.error(0,"接口未激活");
-        }
-        return R.ok().put("data",resultData);
-    }
     /**
      * 上传文件
      */

@@ -1,6 +1,6 @@
 package com.hq;
 
-import com.hq.modules.app.utils.JwtUtils;
+import com.hq.modules.wi.utils.JwtUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

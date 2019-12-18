@@ -85,10 +85,10 @@ cityfire:
   jwt:
     # 加密秘钥
     secret: f4e2e52034348f86b67cde581c0f9eb5
-    # token有效时长，7天，单位秒
-    expire: 604800
+    # token有效时长，7天，单位秒604800
+    expire: 360
     header: token
   wi:
     basepath: G:\\test
-    baseurl: http://localhost:8080/city-fire/wi/api
+    baseurl: http://localhost:8080/city-fire/wi/services
 

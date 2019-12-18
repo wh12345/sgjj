@@ -1,8 +1,10 @@
 package com.hq.modules.wi.service;
 
 import com.hq.common.utils.PageUtils;
+import com.hq.common.utils.R;
 import com.hq.modules.wi.entity.WiApiEntity;
 import org.springframework.stereotype.Service;
+
 import java.util.Map;
 
 /**
@@ -16,7 +18,7 @@ public interface ApiService {
      * @param data
      * @return
      */
-    public String requestApi(String servicename,String  data);
+    public R requestApi(String servicename, String  data, Long userId,String type);
 
     /**
      * 查询整个页面
