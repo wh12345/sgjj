@@ -1,15 +1,12 @@
 package com.hq.modules.sys.entity;
 
-import com.baomidou.mybatisplus.annotations.KeySequence;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotation.*;
 import com.hq.common.validator.group.AddGroup;
 import com.hq.common.validator.group.UpdateGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;

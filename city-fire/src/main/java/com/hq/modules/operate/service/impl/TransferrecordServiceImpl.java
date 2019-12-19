@@ -1,8 +1,9 @@
 package com.hq.modules.operate.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hq.common.utils.PageUtils;
 import com.hq.common.utils.Query;
 import com.hq.modules.operate.dao.TransferrecordDao;
@@ -15,15 +16,19 @@ import java.util.Map;
 
 
 @Service("TransferrecordService")
+@DS("oracle")
 public class TransferrecordServiceImpl extends ServiceImpl<TransferrecordDao, TransferrecordEntity> implements TransferrecordService {
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<TransferrecordEntity> page = this.selectPage(
+        /*Page<TransferrecordEntity> page = this.selectPage(
                 new Query<TransferrecordEntity>(params).getPage(),
                 new EntityWrapper<TransferrecordEntity>()
+        );*/
+        Page<TransferrecordEntity> page = this.page(
+                new Query<TransferrecordEntity>(params).getPage(),
+                new QueryWrapper<TransferrecordEntity>()
         );
-
         return new PageUtils(page);
     }
 

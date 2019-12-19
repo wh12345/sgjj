@@ -1,7 +1,7 @@
 {
   "name": "city-fire-front",
   "version": "1.2.2",
-  "description": "韶关交通显示屏管理系统",
+  "description": "韶关交警铁骑勤务管理系统",
   "author": "hq",
   "private": true,
   "scripts": {

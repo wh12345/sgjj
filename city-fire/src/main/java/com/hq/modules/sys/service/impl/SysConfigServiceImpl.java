@@ -1,9 +1,11 @@
 
 package com.hq.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
 import com.hq.common.exception.RRException;
 import com.hq.common.utils.PageUtils;
@@ -21,6 +23,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 @Service("sysConfigService")
+@DS("oracle")
 public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEntity> implements SysConfigService {
 	@Autowired
 	private SysConfigRedis sysConfigRedis;
@@ -29,26 +32,24 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
 	public PageUtils queryPage(Map<String, Object> params) {
 		String paramKey = (String)params.get("paramKey");
 
-		Page<SysConfigEntity> page = this.selectPage(
-				new Query<SysConfigEntity>(params).getPage(),
-				new EntityWrapper<SysConfigEntity>()
-					.like(StringUtils.isNotBlank(paramKey),"param_key", paramKey)
-					.eq("status", 1)
+		Page<SysConfigEntity> page = this.page(new Query<SysConfigEntity>(params).getPage()
+				,new QueryWrapper<SysConfigEntity>().like(StringUtils.isNotBlank(paramKey),"param_key", paramKey)
+				.eq("status", 1)
 		);
-
 		return new PageUtils(page);
 	}
 	
 	@Override
-	public void save(SysConfigEntity config) {
-		this.insert(config);
+	public boolean save(SysConfigEntity config) {
+		super.save(config);
 		sysConfigRedis.saveOrUpdate(config);
-	}
+        return false;
+    }
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void update(SysConfigEntity config) {
-		this.updateAllColumnById(config);
+		this.saveOrUpdate(config);
 		sysConfigRedis.saveOrUpdate(config);
 	}
 
@@ -63,11 +64,11 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigDao, SysConfigEnt
 	@Transactional(rollbackFor = Exception.class)
 	public void deleteBatch(Long[] ids) {
 		for(Long id : ids){
-			SysConfigEntity config = this.selectById(id);
+			SysConfigEntity config = this.getById(id);
 			sysConfigRedis.delete(config.getParamKey());
 		}
 
-		this.deleteBatchIds(Arrays.asList(ids));
+		this.removeByIds(Arrays.asList(ids));
 	}
 
 	@Override

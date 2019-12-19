@@ -1,6 +1,7 @@
 package com.hq.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hq.modules.sys.dao.SysRoleMenuDao;
 import com.hq.modules.sys.entity.SysRoleMenuEntity;
 import com.hq.modules.sys.service.SysRoleMenuService;
@@ -15,6 +16,7 @@ import java.util.List;
  * 角色与菜单对应关系
  */
 @Service("sysRoleMenuService")
+@DS("oracle")
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuDao, SysRoleMenuEntity> implements SysRoleMenuService {
 
 	@Override
@@ -36,7 +38,8 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuDao, SysRoleM
 
 			list.add(sysRoleMenuEntity);
 		}
-		this.insertBatch(list);
+		//this.insertBatch(list);
+		this.saveBatch(list);
 	}
 
 	@Override

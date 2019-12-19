@@ -1,8 +1,10 @@
 package com.hq.modules.operate.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hq.common.utils.PageUtils;
 import com.hq.common.utils.Query;
 import com.hq.modules.operate.dao.EquipmentDao;
@@ -16,6 +18,7 @@ import java.util.Map;
 
 
 @Service("EquipmentService")
+@DS("oracle")
 public class EquipmentServiceImpl extends ServiceImpl<EquipmentDao, EquipmentEntity> implements EquipmentService {
 
     @Override
@@ -23,14 +26,20 @@ public class EquipmentServiceImpl extends ServiceImpl<EquipmentDao, EquipmentEnt
         String equipmentName = (String) params.get("equipmentName");
         String belongTypeName = (String) params.get("belongTypeName");
         String community = (String) params.get("community");
-        Page<EquipmentEntity> page = this.selectPage(
+        /*Page<EquipmentEntity> page = this.selectPage(
                 new Query<EquipmentEntity>(params).getPage(),
                 new EntityWrapper<EquipmentEntity>().where("1 = 1")
                         .and(StringUtils.isNotBlank(belongTypeName),"belong_typename = {0}",belongTypeName)
                 .and(StringUtils.isNotBlank(community),"community = {0}",community)
                 .like(StringUtils.isNotBlank(equipmentName),"equipment_name ",equipmentName)
-        );
+        );*/
+        Page<EquipmentEntity> page = this.page(
+                new Query<EquipmentEntity>(params).getPage(),
+                new QueryWrapper<EquipmentEntity>().apply(StringUtils.isNotBlank(belongTypeName),"belong_typename = {0}",belongTypeName)
+                        .apply(StringUtils.isNotBlank(community),"community = {0}",community)
+                        .like(StringUtils.isNotBlank(equipmentName),"equipment_name ",equipmentName)
 
+        );
         return new PageUtils(page);
     }
 

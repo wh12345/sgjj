@@ -18,8 +18,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<mybatisplus.spring.boot.version>1.0.5</mybatisplus.spring.boot.version>
-		<mybatisplus.version>2.2.0</mybatisplus.version>
+		<mybatisplus.version>3.3.0</mybatisplus.version>
+		<dynamic.version>2.5.4</dynamic.version>
 		<mysql.version>5.1.38</mysql.version>
 		<mssql.version>4.0</mssql.version>
 		<oracle.version>11.2.0.3</oracle.version>
@@ -41,7 +41,9 @@
 		<fastjson.version>1.2.47</fastjson.version>
 		<hutool.version>4.1.1</hutool.version>
 		<poi.version>3.9</poi.version>
-
+		<gson.version>2.6.2</gson.version>
+		<wisdk.version>1.0.0</wisdk.version>
+		<lombok.version>1.16.16</lombok.version>
 		<!--wagon plugin 配置-->
 		<service-path>/work/cityfire</service-path>
 		<pack-name>${project.artifactId}-${project.version}.jar</pack-name>
@@ -99,6 +101,7 @@
 			<artifactId>poi-ooxml-schemas</artifactId>
 			<version>${poi.version}</version>
 		</dependency>
+		<!--热部署-->
 		<!--<dependency>-->
 			<!--<groupId>org.springframework.boot</groupId>-->
 			<!--<artifactId>spring-boot-devtools</artifactId>-->
@@ -112,19 +115,19 @@
 		</dependency>
 		<dependency>
 			<groupId>com.baomidou</groupId>
-			<artifactId>mybatisplus-spring-boot-starter</artifactId>
-			<version>${mybatisplus.spring.boot.version}</version>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>${mybatisplus.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus</artifactId>
-			<version>${mybatisplus.version}</version>
+			<artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+			<version>${dynamic.version}</version>
 		</dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
-		</dependency>-->
+		</dependency>
 		 <!--oracle驱动-->
 		<dependency>
 			<groupId>com.oracle</groupId>
@@ -252,19 +255,19 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.6.2</version>
+			<version>${gson.version}</version>
 		</dependency>
 		<!--接口服务-->
 		<dependency>
 			<groupId>com.qy</groupId>
 			<artifactId>wisdk</artifactId>
-			<version>1.0.0</version>
+			<version>${wisdk.version}</version>
 		</dependency>
 		<!--lombok-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.16</version>
+			<version>${lombok.version}</version>
 		</dependency>
 	</dependencies>
 

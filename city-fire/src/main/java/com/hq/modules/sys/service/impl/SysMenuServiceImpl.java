@@ -1,8 +1,7 @@
-
 package com.hq.modules.sys.service.impl;
 
-
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hq.common.utils.Constant;
 import com.hq.common.utils.MapUtils;
 import com.hq.modules.sys.dao.SysMenuDao;
@@ -16,8 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service("sysMenuService")
+@DS("oracle")
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> implements SysMenuService {
 	@Autowired
 	private SysUserService sysUserService;
@@ -65,9 +64,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuEntity> i
 	@Override
 	public void delete(Long menuId){
 		//删除菜单
-		this.deleteById(menuId);
+		this.removeById(menuId);
 		//删除菜单与角色关联
-		sysRoleMenuService.deleteByMap(new MapUtils().put("menu_id", menuId));
+		sysRoleMenuService.removeByMap(new MapUtils().put("menu_id", menuId));
 	}
 
 	/**

@@ -1,8 +1,9 @@
 package com.hq.modules.operate.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hq.common.utils.PageUtils;
 import com.hq.common.utils.Query;
 import com.hq.modules.operate.dao.CategoryDao;
@@ -15,13 +16,14 @@ import java.util.Map;
 
 
 @Service("CategoryService")
+@DS("oracle")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<CategoryEntity> page = this.selectPage(
+        Page<CategoryEntity> page = this.page(
                 new Query<CategoryEntity>(params).getPage(),
-                new EntityWrapper<CategoryEntity>()
+                new QueryWrapper<CategoryEntity>()
         );
 
         return new PageUtils(page);

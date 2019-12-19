@@ -45,8 +45,7 @@ public class AdandonrecordController {
     @RequestMapping("/info/{recordId}")
     @RequiresPermissions("sys:cfadandonrecord:info")
     public R info(@PathVariable("recordId") String recordId){
-        AdandonrecordEntity cfAdandonrecord = adandonrecordService.selectById(recordId);
-
+        AdandonrecordEntity cfAdandonrecord = adandonrecordService.getById(recordId);
         return R.ok().put("cfAdandonrecord", cfAdandonrecord);
     }
 
@@ -56,8 +55,7 @@ public class AdandonrecordController {
     @RequestMapping("/save")
     @RequiresPermissions("sys:cfadandonrecord:save")
     public R save(@RequestBody AdandonrecordEntity cfAdandonrecord){
-        adandonrecordService.insert(cfAdandonrecord);
-
+        adandonrecordService.save(cfAdandonrecord);
         return R.ok();
     }
 
@@ -68,8 +66,7 @@ public class AdandonrecordController {
     @RequiresPermissions("sys:cfadandonrecord:update")
     public R update(@RequestBody AdandonrecordEntity cfAdandonrecord){
         ValidatorUtils.validateEntity(cfAdandonrecord);
-        adandonrecordService.updateAllColumnById(cfAdandonrecord);//全部更新
-        
+        adandonrecordService.saveOrUpdate(cfAdandonrecord);//全部更新
         return R.ok();
     }
 
@@ -79,8 +76,7 @@ public class AdandonrecordController {
     @RequestMapping("/delete")
     @RequiresPermissions("sys:cfadandonrecord:delete")
     public R delete(@RequestBody String[] recordIds){
-        adandonrecordService.deleteBatchIds(Arrays.asList(recordIds));
-
+        adandonrecordService.removeByIds(Arrays.asList(recordIds));
         return R.ok();
     }
 

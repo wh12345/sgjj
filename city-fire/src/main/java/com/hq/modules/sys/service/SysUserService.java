@@ -1,9 +1,8 @@
 package com.hq.modules.sys.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.hq.common.utils.PageUtils;
 import com.hq.modules.sys.entity.SysUserEntity;
-
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +33,7 @@ public interface SysUserService extends IService<SysUserEntity> {
 	/**
 	 * 保存用户
 	 */
-	void save(SysUserEntity user);
+	boolean save(SysUserEntity user);
 	
 	/**
 	 * 修改用户

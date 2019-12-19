@@ -1,8 +1,6 @@
-
-
 package com.hq.modules.job.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.hq.common.utils.PageUtils;
 import com.hq.modules.job.entity.ScheduleJobEntity;
 
@@ -18,7 +16,7 @@ public interface ScheduleJobService extends IService<ScheduleJobEntity> {
 	/**
 	 * 保存定时任务
 	 */
-	void save(ScheduleJobEntity scheduleJob);
+	boolean save(ScheduleJobEntity scheduleJob);
 	
 	/**
 	 * 更新定时任务

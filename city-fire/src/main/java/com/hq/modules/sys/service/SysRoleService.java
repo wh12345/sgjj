@@ -1,9 +1,9 @@
 package com.hq.modules.sys.service;
 
-import com.baomidou.mybatisplus.service.IService;
+
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.hq.common.utils.PageUtils;
 import com.hq.modules.sys.entity.SysRoleEntity;
-
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +15,7 @@ public interface SysRoleService extends IService<SysRoleEntity> {
 
 	PageUtils queryPage(Map<String, Object> params);
 
-	void save(SysRoleEntity role);
+	boolean save(SysRoleEntity role);
 
 	void update(SysRoleEntity role);
 

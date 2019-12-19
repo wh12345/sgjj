@@ -40,7 +40,7 @@ public class ScheduleJobController {
 	@GetMapping("/info/{jobId}")
 	@RequiresPermissions("sys:schedule:info")
 	public R info(@PathVariable("jobId") Long jobId){
-		ScheduleJobEntity schedule = scheduleJobService.selectById(jobId);
+		ScheduleJobEntity schedule = scheduleJobService.getById(jobId);
 		
 		return R.ok().put("schedule", schedule);
 	}

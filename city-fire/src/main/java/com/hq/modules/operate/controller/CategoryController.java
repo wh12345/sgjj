@@ -48,7 +48,7 @@ public class CategoryController {
     @RequestMapping("/info/{categoryId}")
     @RequiresPermissions("operate:category:info")
     public R info(@PathVariable("categoryId") String categoryId){
-        CategoryEntity cfCategory = categoryService.selectById(categoryId);
+        CategoryEntity cfCategory = categoryService.getById(categoryId);
 
         return R.ok().put("cfCategory", cfCategory);
     }
@@ -61,7 +61,7 @@ public class CategoryController {
     public R save(@RequestBody CategoryEntity cfCategory){
         cfCategory.setTypeId(cfCategory.getTypePid()+DateUtils.getHHmmssTime());
         cfCategory.setGmtCreate(new Date());
-        categoryService.insert(cfCategory);
+        categoryService.save(cfCategory);
         return R.ok();
     }
 
@@ -74,7 +74,7 @@ public class CategoryController {
         ValidatorUtils.validateEntity(cfCategory);
         cfCategory.setStatus(0);
         cfCategory.setGmtCreate(new Date());
-        categoryService.updateAllColumnById(cfCategory);//全部更新
+        categoryService.saveOrUpdate(cfCategory);//全部更新
         // if 名称不为null，级联更新子菜单的Pname
         if (cfCategory.getTypeName() != "" && !cfCategory.getTypeName().equals("")) {
             categoryService.changPnameBypid(cfCategory.getTypeId(), cfCategory.getTypeName());
@@ -89,7 +89,7 @@ public class CategoryController {
     @RequiresPermissions("operate:category:delete")
     public R delete(@RequestParam Map<String, Object> params){
         Long categoryId = Long.valueOf(params.get("categoryId").toString());
-        categoryService.deleteById(categoryId);
+        categoryService.removeById(categoryId);
         return R.ok();
     }
 

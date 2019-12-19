@@ -188,7 +188,7 @@ public class LocationController {
     @ResponseBody
     @RequiresPermissions("operate:location:info")
     public R info(@PathVariable("locationId") String locationId){
-        LocationEntity cfLocation = locationService.selectById(locationId);
+        LocationEntity cfLocation = locationService.getById(locationId);
 
         return R.ok().put("cfLocation", cfLocation);
     }
@@ -205,7 +205,7 @@ public class LocationController {
         cfLocation.setLocationId(cfLocation.getCitycode()+cfLocation.getAdcode()+lat+""+lng+DateUtils.getHHmmssTime());
         cfLocation.setStatus(0);
         cfLocation.setGmtCreate(new Date());
-        locationService.insertAllColumn(cfLocation);
+        locationService.save(cfLocation);
         return R.ok();
     }
 
@@ -244,7 +244,7 @@ public class LocationController {
     @ResponseBody
     @RequiresPermissions("operate:location:delete")
     public R delete(@RequestBody String[] locationIds){
-        locationService.deleteBatchIds(Arrays.asList(locationIds));
+        locationService.removeByIds(Arrays.asList(locationIds));
         return R.ok();
     }
 

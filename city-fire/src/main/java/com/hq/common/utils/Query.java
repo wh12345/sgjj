@@ -1,11 +1,15 @@
 
 package com.hq.common.utils;
 
-import com.baomidou.mybatisplus.plugins.Page;
+
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hq.common.xss.SQLFilter;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,8 +56,14 @@ public class Query<T> extends LinkedHashMap<String, Object> {
 
         //排序
         if(StringUtils.isNotBlank(sidx) && StringUtils.isNotBlank(order)){
-            this.page.setOrderByField(sidx);
-            this.page.setAsc("ASC".equalsIgnoreCase(order));
+            //this.page.setOrderByField(sidx);
+            //this.page.setAsc("ASC".equalsIgnoreCase(order));
+            OrderItem orderItem = new OrderItem();
+            orderItem.setColumn(sidx);
+            orderItem.setAsc("ASC".equalsIgnoreCase(order));
+            List list =new ArrayList<OrderItem>();
+            list.add(orderItem);
+            this.page.setOrders(list);
         }
 
     }

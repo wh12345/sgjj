@@ -44,7 +44,7 @@ public class TransferrecordController {
     @RequestMapping("/info/{recordId}")
     @RequiresPermissions("sys:cftransferrecord:info")
     public R info(@PathVariable("recordId") String recordId){
-        TransferrecordEntity cfTransferrecord = transferrecordService.selectById(recordId);
+        TransferrecordEntity cfTransferrecord = transferrecordService.getById(recordId);
 
         return R.ok().put("cfTransferrecord", cfTransferrecord);
     }
@@ -55,7 +55,7 @@ public class TransferrecordController {
     @RequestMapping("/save")
     @RequiresPermissions("sys:cftransferrecord:save")
     public R save(@RequestBody TransferrecordEntity cfTransferrecord){
-        transferrecordService.insert(cfTransferrecord);
+        transferrecordService.save(cfTransferrecord);
 
         return R.ok();
     }
@@ -67,8 +67,8 @@ public class TransferrecordController {
     @RequiresPermissions("sys:cftransferrecord:update")
     public R update(@RequestBody TransferrecordEntity cfTransferrecord){
         ValidatorUtils.validateEntity(cfTransferrecord);
-        transferrecordService.updateAllColumnById(cfTransferrecord);//全部更新
-        
+        //全部更新
+        transferrecordService.updateById(cfTransferrecord);
         return R.ok();
     }
 
@@ -78,7 +78,7 @@ public class TransferrecordController {
     @RequestMapping("/delete")
     @RequiresPermissions("sys:cftransferrecord:delete")
     public R delete(@RequestBody String[] recordIds){
-        transferrecordService.deleteBatchIds(Arrays.asList(recordIds));
+        transferrecordService.removeByIds(Arrays.asList(recordIds));
 
         return R.ok();
     }

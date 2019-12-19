@@ -1,9 +1,9 @@
 package com.hq.modules.wi.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.toolkit.StringUtils;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hq.common.utils.PageUtils;
 import com.hq.common.utils.Query;
 import com.hq.common.utils.R;
@@ -14,6 +14,7 @@ import com.hq.modules.wi.entity.WiUserEntity;
 import com.hq.modules.wi.proxy.ApiProxy;
 import com.hq.modules.wi.service.ApiService;
 import com.qy.api.RequestApi;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ import java.util.Map;
  * Created by Because of you on 2019/11/18.
  */
 @Service
+@DS("oracle")
 public class ApiServiceImpl extends ServiceImpl<WiApiDao,WiApiEntity> implements ApiService {
     @Value(value = "${cityfire.wi.baseurl}")
     private String baseurl;
@@ -47,10 +49,8 @@ public class ApiServiceImpl extends ServiceImpl<WiApiDao,WiApiEntity> implements
         List list = Arrays.asList(strings);
         //数据库查询
         RequestApi api = null;
-        WiApiEntity wiApiEntity = new WiApiEntity();
-        wiApiEntity.setServicename(servicename);
-        //wiApiEntity.setActive(1);
-        wiApiEntity = wiApiDao.selectOne(wiApiEntity);
+        WiApiEntity  wiApiEntity = wiApiDao.selectOne(new QueryWrapper<WiApiEntity>()
+                                    .eq(StringUtils.isNotEmpty(servicename),"servicename",servicename));
         boolean flag = list.contains(wiApiEntity.getId());
         if(!flag) {
             r = R.error(-1,"你没有访问该接口的权限!");;
@@ -76,9 +76,9 @@ public class ApiServiceImpl extends ServiceImpl<WiApiDao,WiApiEntity> implements
     @Override
     public PageUtils queryPage(Map<String,Object> params) {
         String servicename = (String)params.get("servicename");
-        Page<WiApiEntity> page = this.selectPage(
+        Page<WiApiEntity> page = this.page(
                 new Query<WiApiEntity>(params).getPage(),
-                new EntityWrapper<WiApiEntity>().like(StringUtils.isNotEmpty(servicename),"servicename",servicename)
+                new QueryWrapper<WiApiEntity>().like(StringUtils.isNotEmpty(servicename),"servicename",servicename)
         );
         return new PageUtils(page);
     }

@@ -1,7 +1,8 @@
 
 package com.hq.modules.sys.service;
 
-import com.baomidou.mybatisplus.service.IService;
+
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.hq.modules.sys.entity.SysCaptchaEntity;
 
 import java.awt.image.BufferedImage;

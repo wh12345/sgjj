@@ -1,5 +1,6 @@
 package com.hq.modules.sys.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.hq.common.utils.Constant;
 import com.hq.modules.sys.dao.SysMenuDao;
 import com.hq.modules.sys.dao.SysUserDao;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
+@DS("oracle")
 public class ShiroServiceImpl implements ShiroService {
     @Autowired
     private SysMenuDao sysMenuDao;

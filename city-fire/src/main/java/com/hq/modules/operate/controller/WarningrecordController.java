@@ -183,7 +183,7 @@ public class WarningrecordController {
     @RequestMapping("/info/{recordId}")
     @RequiresPermissions("operate:warningrecord:info")
     public R info(@PathVariable("recordId") String recordId){
-        WarningrecordEntity cfWarningrecord = warningrecordService.selectById(recordId);
+        WarningrecordEntity cfWarningrecord = warningrecordService.getById(recordId);
 
         return R.ok().put("cfWarningrecord", cfWarningrecord);
     }
@@ -196,7 +196,7 @@ public class WarningrecordController {
     public R save(@RequestBody WarningrecordEntity cfWarningrecord){
         cfWarningrecord.setWarningTime(new Date());
         cfWarningrecord.setStatus(1);
-        warningrecordService.insert(cfWarningrecord);
+        warningrecordService.save(cfWarningrecord);
         equipmentService.updateStatusByid(cfWarningrecord.getOperatorStatus(),cfWarningrecord.getEquipmentId());
         return R.ok();
     }
@@ -209,8 +209,8 @@ public class WarningrecordController {
     public R update(@RequestBody WarningrecordEntity cfWarningrecord){
         ValidatorUtils.validateEntity(cfWarningrecord);
         cfWarningrecord.setDealTime(new Date());
-        warningrecordService.updateAllColumnById(cfWarningrecord);//全部更新
-
+        //全部更新
+        warningrecordService.saveOrUpdate(cfWarningrecord);
         return R.ok();
     }
 
@@ -231,7 +231,7 @@ public class WarningrecordController {
     @RequestMapping("/delete")
     @RequiresPermissions("operate:warningrecord:delete")
     public R delete(@RequestBody String[] recordIds){
-        warningrecordService.deleteBatchIds(Arrays.asList(recordIds));
+        warningrecordService.removeByIds(Arrays.asList(recordIds));
 
         return R.ok();
     }

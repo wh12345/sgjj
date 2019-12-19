@@ -1,8 +1,9 @@
 package com.hq.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hq.common.exception.RRException;
 import com.hq.common.utils.Constant;
 import com.hq.common.utils.PageUtils;
@@ -29,6 +30,7 @@ import java.util.Map;
  * 系统用户
  */
 @Service("sysUserService")
+@DS("oracle")
 public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> implements SysUserService {
 	@Autowired
 	private SysUserRoleService sysUserRoleService;
@@ -40,13 +42,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 		String username = (String)params.get("username");
 		Long createUserId = (Long)params.get("createUserId");
 
-		Page<SysUserEntity> page = this.selectPage(
-			new Query<SysUserEntity>(params).getPage(),
-			new EntityWrapper<SysUserEntity>()
-				.like(StringUtils.isNotBlank(username),"username", username)
-				.eq(createUserId != null,"create_user_id", createUserId)
+		Page<SysUserEntity> page = this.page(
+				new Query<SysUserEntity>(params).getPage(),
+				new QueryWrapper<SysUserEntity>()
+						.like(StringUtils.isNotBlank(username),"username", username)
+						.eq(createUserId != null,"create_user_id", createUserId)
 		);
-
 		return new PageUtils(page);
 	}
 
@@ -67,20 +68,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 
 	@Override
 	@Transactional
-	public void save(SysUserEntity user) {
+	public boolean save(SysUserEntity user) {
 		user.setCreateTime(new Date());
 		//sha256加密
 		String salt = RandomStringUtils.randomAlphanumeric(20);
 		user.setPassword(new Sha256Hash(user.getPassword(), salt).toHex());
 		user.setSalt(salt);
-		this.insert(user);
-		
+		super.save(user);
 		//检查角色是否越权
 		checkRole(user);
 		
 		//保存用户与角色关系
 		sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
-	}
+        return false;
+    }
 
 	@Override
 	@Transactional
@@ -101,7 +102,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 
 	@Override
 	public void deleteBatch(Long[] userId) {
-		this.deleteBatchIds(Arrays.asList(userId));
+		this.removeByIds(Arrays.asList(userId));
 	}
 
 	@Override
@@ -109,7 +110,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 		SysUserEntity userEntity = new SysUserEntity();
 		userEntity.setPassword(newPassword);
 		return this.update(userEntity,
-				new EntityWrapper<SysUserEntity>().eq("user_id", userId).eq("password", password));
+				new QueryWrapper<SysUserEntity>().eq("user_id", userId).eq("password", password));
 	}
 	
 	/**

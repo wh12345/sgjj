@@ -1,5 +1,6 @@
 package com.hq.modules.query.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.hq.modules.query.dao.QuerySynthesisDao;
 import com.hq.modules.query.entity.QueryConditionEntity;
 import com.hq.modules.query.entity.QueryRankEntity;
@@ -7,6 +8,7 @@ import com.hq.modules.query.entity.QueryTableEntity;
 import com.hq.modules.query.service.QuerySynthesisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.Map;
  * Created by Because of you on 2019/12/3.
  */
 @Service
+@DS("oracle")
 public class QuerySynthesisServiceImpl implements QuerySynthesisService {
     @Autowired
     private QuerySynthesisDao systhesisDao;

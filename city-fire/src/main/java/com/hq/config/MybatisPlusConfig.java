@@ -2,8 +2,9 @@
 
 package com.hq.config;
 
-import com.baomidou.mybatisplus.incrementer.OracleKeyGenerator;
-import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+
+import com.baomidou.mybatisplus.extension.incrementer.OracleKeyGenerator;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

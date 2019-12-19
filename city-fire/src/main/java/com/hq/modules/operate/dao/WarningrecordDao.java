@@ -1,7 +1,6 @@
 package com.hq.modules.operate.dao;
 
-
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hq.modules.operate.entity.WarningrecordEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,6 +13,5 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface WarningrecordDao extends BaseMapper<WarningrecordEntity> {
-
     void dealWarning(@Param("warningrecord")WarningrecordEntity warningrecordEntity);
 }

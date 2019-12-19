@@ -2,8 +2,8 @@
   <nav class="site-navbar" :class="'site-navbar--' + navbarLayoutType">
     <div class="site-navbar__header">
       <h1 class="site-navbar__brand" @click="$router.push({ name: 'home' })">
-        <a class="site-navbar__brand-lg" href="javascript:;">道路显示屏后台管理</a>
-        <a class="site-navbar__brand-mini" href="javascript:;">CityFire</a>
+        <a class="site-navbar__brand-lg" href="javascript:;">韶关交警铁骑勤务管理</a>
+        <a class="site-navbar__brand-mini" href="javascript:;">SgjjCavalryManager</a>
       </h1>
     </div>
     <div class="site-navbar__body clearfix">

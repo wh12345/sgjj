@@ -1,6 +1,7 @@
 package com.hq.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hq.common.utils.R;
 import com.hq.modules.sys.dao.SysUserTokenDao;
 import com.hq.modules.sys.entity.SysUserTokenEntity;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 
 @Service("sysUserTokenService")
+@DS("oracle")
 public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUserTokenEntity> implements SysUserTokenService {
 	//12小时后过期
 	private final static int EXPIRE = 3600 * 12;
@@ -28,7 +30,7 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
 		Date expireTime = new Date(now.getTime() + EXPIRE * 1000);
 
 		//判断是否生成过token
-		SysUserTokenEntity tokenEntity = this.selectById(userId);
+		SysUserTokenEntity tokenEntity = this.getById(userId);
 		if(tokenEntity == null){
 			tokenEntity = new SysUserTokenEntity();
 			tokenEntity.setUserId(userId);
@@ -37,7 +39,7 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
 			tokenEntity.setExpireTime(expireTime);
 
 			//保存token
-			this.insert(tokenEntity);
+			this.save(tokenEntity);
 		}else{
 			tokenEntity.setToken(token);
 			tokenEntity.setUpdateTime(now);

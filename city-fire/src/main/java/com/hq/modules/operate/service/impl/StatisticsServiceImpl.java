@@ -1,5 +1,6 @@
 package com.hq.modules.operate.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.hq.modules.operate.dao.EquipmentDao;
 import com.hq.modules.operate.dao.LocationDao;
 import com.hq.modules.operate.entity.EquipmentStatistics;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service("StatisticsService ")
+@DS("oracle")
 public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private EquipmentDao equipmentDao;

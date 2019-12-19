@@ -581,16 +581,6 @@ INSERT INTO sys_menu VALUES ('43', '0', '统计管理', null, null, '0', 'tubiao
 INSERT INTO sys_menu VALUES ('44', '43', '位置统计', '/statistics/location', 'operate:location:list', '1', 'daohang', '0');
 INSERT INTO sys_menu VALUES ('45', '43', '设备统计', '/statistics/equipment', 'operate:equipment:list', '1', 'zhedie', '1');
 
-CREATE TABLE sys_oss (
-  id number(20) NOT NULL,
-  url varchar2(200) DEFAULT NULL ,
-  create_date date DEFAULT NULL,
-  PRIMARY KEY (id)
-);
-comment on table sys_oss is '文件上传';
-comment on column sys_oss.url is 'URL地址';
-comment on column sys_oss.create_date is '创建时间';
-
 CREATE TABLE sys_role (
   role_id number(20) NOT NULL,
   role_name varchar2(100) DEFAULT NULL,
@@ -712,22 +702,6 @@ INSERT INTO sys_user_token VALUES ('1', '463e1a56bbc12af142b5b72701c9d864', TO_D
 INSERT INTO sys_user_token VALUES ('2', '5c47027f5668cff7af270778729f31a9', TO_DATE('2019-01-12 02:02:22','YYYY-MM-DD HH24:MI:SS'), TO_DATE('2019-01-11 14:02:22','YYYY-MM-DD HH24:MI:SS'));
 
 
-CREATE TABLE tb_user (
-  user_id NUMBER(20) NOT NULL,
-  username varchar2(50) NOT NULL  UNIQUE,
-  mobile varchar2(20) NOT NULL,
-  password varchar2(64) DEFAULT NULL,
-  create_time date DEFAULT NULL,
-  PRIMARY KEY (user_id)
-);
-COMMENT ON table tb_user IS  '用户';
-COMMENT ON COLUMN tb_user.username  IS   '用户名' ;
-COMMENT ON COLUMN tb_user.mobile  IS   '手机号' ;
-COMMENT ON COLUMN tb_user.password  IS    '密码';
-COMMENT ON COLUMN tb_user.create_time IS   '创建时间' ;
-
-INSERT INTO tb_user VALUES ('1', 'mark', '13612345678', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', TO_DATE('2017-03-23 22:37:41','YYYY-MM-DD HH24:MI:SS'));
-
 
 
 
@@ -764,3 +738,28 @@ comment on column wi_user.password is '密码';
 comment on column wi_user.serviceids is '用户可访问的服务';
 comment on column wi_user.create_time is '创建时间';
 create sequence seq_wi_user;
+
+
+create table tq_cavalry(
+       id number(20) not null primary key,
+       dwbh number(15) not null,
+       dwmc varchar2(64),
+       jybh varchar2(32) not null,
+       jyxm varchar2(20) not null,
+       jyzw varchar2(20),
+       hphm varchar2(20) not null,
+       phonenumber varchar2(11),
+       remark varchar2(64)
+)
+create sequence seq_tb_cavalry;
+comment on table tq_cavalry is '铁骑信息表';
+comment on column tq_cavalry.id is 'id';
+comment on column tq_cavalry.dwbh is '单位编号';
+comment on column tq_cavalry.dwmc is '单位名称';
+comment on column tq_cavalry.jybh is '警员编号';
+comment on column tq_cavalry.jyxm is '警员姓名';
+comment on column tq_cavalry.jyzw is '警员职位';
+comment on column tq_cavalry.hphm is '铁骑车辆号牌号码';
+comment on column tq_cavalry.phonenumber is '电话号码';
+comment on column tq_cavalry.remark is '备注';    
+       

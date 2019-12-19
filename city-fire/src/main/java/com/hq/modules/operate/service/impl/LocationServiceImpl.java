@@ -1,8 +1,9 @@
 package com.hq.modules.operate.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hq.common.utils.PageUtils;
 import com.hq.common.utils.Query;
 import com.hq.modules.operate.dao.LocationDao;
@@ -17,19 +18,25 @@ import java.util.Map;
 
 
 @Service("LocationService")
+@DS("oracle")
 public class LocationServiceImpl extends ServiceImpl<LocationDao, LocationEntity> implements LocationService {
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         String district = (String) params.get("district");
         String locationName = (String) params.get("locationName");
-        Page<LocationEntity> page = this.selectPage(
+        /*Page<LocationEntity> page = this.selectPage(
                 new Query<LocationEntity>(params).getPage(),
                 new EntityWrapper<LocationEntity>()
                         .where(StringUtils.isNotBlank(district),"district = {0}",district)
                         .like(StringUtils.isNotBlank(locationName),"location_name",locationName)
+        );*/
+        Page<LocationEntity> page = this.page(
+                new Query<LocationEntity>(params).getPage(),
+                new QueryWrapper<LocationEntity>()
+                        .apply(StringUtils.isNotBlank(district),"district = {0}",district)
+                        .like(StringUtils.isNotBlank(locationName),"location_name",locationName)
         );
-
         return new PageUtils(page);
     }
 

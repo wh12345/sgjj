@@ -3,8 +3,8 @@
     <div class="site-content__wrapper">
       <div class="site-content">
         <div class="brand-info">
-          <h2 class="brand-info__text">韶关交通信息屏管理系统</h2>
-          <p class="brand-info__intro">信息发布、区域管理、设备管理、统计报表</p>
+          <h2 class="brand-info__text">韶关交警铁骑勤务管理系统</h2>
+          <p class="brand-info__intro">定位追踪、指挥调度、监督考核、统计报表</p>
         </div>
         <div class="login-main">
           <h3 class="login-title">管理员登录</h3>

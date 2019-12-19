@@ -1,6 +1,6 @@
 package com.hq.modules.sys.dao;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hq.modules.sys.entity.SysUserTokenEntity;
 import org.apache.ibatis.annotations.Mapper;
 

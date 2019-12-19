@@ -1,6 +1,8 @@
 package com.hq.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hq.common.utils.MapUtils;
 import com.hq.modules.sys.dao.SysUserRoleDao;
 import com.hq.modules.sys.entity.SysUserRoleEntity;
@@ -16,13 +18,13 @@ import java.util.List;
  * 用户与角色对应关系
  */
 @Service("sysUserRoleService")
+@DS("oracle")
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleDao, SysUserRoleEntity> implements SysUserRoleService {
 
 	@Override
 	public void saveOrUpdate(Long userId, List<Long> roleIdList) {
 		//先删除用户与角色关系
-		this.deleteByMap(new MapUtils().put("user_id", userId));
-
+		this.removeByMap(new MapUtils().put("user_id", userId));
 		if(roleIdList == null || roleIdList.size() == 0){
 			return ;
 		}
@@ -36,7 +38,8 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleDao, SysUserR
 
 			list.add(sysUserRoleEntity);
 		}
-		this.insertBatch(list);
+		//this.insertBatch(list);
+		this.saveBatch(list);
 	}
 
 	@Override

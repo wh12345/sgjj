@@ -80,7 +80,7 @@ public class EquipmentController {
     @RequestMapping("/info/{equipmentId}")
     @RequiresPermissions("operate:equipment:info")
     public R info(@PathVariable("equipmentId") String equipmentId){
-        EquipmentEntity cfEquipment = equipmentService.selectById(equipmentId);
+        EquipmentEntity cfEquipment = equipmentService.getById(equipmentId);
 
         return R.ok().put("cfEquipment", cfEquipment);
     }
@@ -94,8 +94,7 @@ public class EquipmentController {
         cfEquipment.setEquipmentStatus(0);
         cfEquipment.setLocationStatus(0);
         cfEquipment.setGmtCreate(new Date());
-        equipmentService.insertAllColumn(cfEquipment);
-
+        equipmentService.save(cfEquipment);
         return R.ok();
     }
 
@@ -106,8 +105,7 @@ public class EquipmentController {
     @RequiresPermissions("operate:equipment:update")
     public R update(@RequestBody EquipmentEntity cfEquipment){
         ValidatorUtils.validateEntity(cfEquipment);
-        equipmentService.updateAllColumnById(cfEquipment);//全部更新
-        
+        equipmentService.save(cfEquipment);//全部更新
         return R.ok();
     }
 
@@ -129,8 +127,7 @@ public class EquipmentController {
     @RequestMapping("/delete")
     @RequiresPermissions("operate:equipment:delete")
     public R delete(@RequestBody String[] equipmentIds){
-        equipmentService.deleteBatchIds(Arrays.asList(equipmentIds));
-
+        equipmentService.removeByIds(Arrays.asList(equipmentIds));
         return R.ok();
     }
 

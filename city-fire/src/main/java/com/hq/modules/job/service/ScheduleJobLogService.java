@@ -1,11 +1,8 @@
-
-
 package com.hq.modules.job.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.hq.common.utils.PageUtils;
 import com.hq.modules.job.entity.ScheduleJobLogEntity;
-
 import java.util.Map;
 
 
