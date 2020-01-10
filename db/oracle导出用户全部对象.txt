@@ -1,0 +1,7 @@
+登录sys用户授权目录
+create directory data_dir as 'F:\sgjj\db';
+grant read,write on directory data_dir to smadmin;
+打开cmd导出
+expdp user/passwd@orcl schemas=user dumpfile=expdp.dmp directory=data_dir logfile=expdp.log;
+删掉目录
+drop directory data_dir;
