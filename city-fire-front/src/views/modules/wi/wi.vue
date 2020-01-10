@@ -82,6 +82,15 @@
         </template>
       </el-table-column>
       </el-table>
+      <el-pagination
+        @size-change="sizeChangeHandle"
+        @current-change="currentChangeHandle"
+        :current-page="pageIndex"
+        :page-sizes="[10, 20, 50, 100]"
+        :page-size="pageSize"
+        :total="totalPage"
+        layout="total, sizes, prev, pager, next, jumper">
+      </el-pagination>
        <!-- 弹窗, 新增 / 修改 -->
      <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
     </div>
@@ -95,7 +104,9 @@
                     servicename: ''
                 },
                 dataList: [],
-                totalPage:'',
+                pageIndex: 1,
+                pageSize: 10,
+                totalPage: 0,
                 dataListLoading: false,
                 dataListSelections: [],
                 addOrUpdateVisible: false
@@ -140,10 +151,6 @@
               this.pageIndex = val
               this.getDataList()
             },
-            // 多选
-            selectionChangeHandle (val) {
-              this.dataListSelections = val
-            },
             // 新增 / 修改
             addOrUpdateHandle (id) {
               this.addOrUpdateVisible = true
@@ -154,12 +161,6 @@
             // 多选
             selectionChangeHandle (val) {
                 this.dataListSelections = val
-            },
-            addOrUpdateHandle(id) {
-              this.addOrUpdateVisible = true
-              this.$nextTick(() => {
-                this.$refs.addOrUpdate.init(id)
-              })
             },
             // 删除
             deleteHandle (id) {

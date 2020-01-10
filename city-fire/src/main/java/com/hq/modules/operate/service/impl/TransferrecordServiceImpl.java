@@ -21,10 +21,6 @@ public class TransferrecordServiceImpl extends ServiceImpl<TransferrecordDao, Tr
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        /*Page<TransferrecordEntity> page = this.selectPage(
-                new Query<TransferrecordEntity>(params).getPage(),
-                new EntityWrapper<TransferrecordEntity>()
-        );*/
         Page<TransferrecordEntity> page = this.page(
                 new Query<TransferrecordEntity>(params).getPage(),
                 new QueryWrapper<TransferrecordEntity>()

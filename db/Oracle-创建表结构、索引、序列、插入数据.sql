@@ -751,7 +751,7 @@ create table tq_cavalry(
        phonenumber varchar2(11),
        remark varchar2(64)
 )
-create sequence seq_tb_cavalry;
+create sequence seq_tq_cavalry;
 comment on table tq_cavalry is '铁骑信息表';
 comment on column tq_cavalry.id is 'id';
 comment on column tq_cavalry.dwbh is '单位编号';
@@ -763,3 +763,18 @@ comment on column tq_cavalry.hphm is '铁骑车辆号牌号码';
 comment on column tq_cavalry.phonenumber is '电话号码';
 comment on column tq_cavalry.remark is '备注';    
        
+
+create table tq_dw(
+      dwbh number(12) primary key,
+      dwmc varchar2(64) not null,
+      dwdz varchar2(128),
+      jd varchar2(8),
+      wd varchar2(8),
+      remark varchar2(128)
+)
+comment on table tq_dw is '单位信息';
+comment on column tq_dw.dwmc is '单位名称';
+comment on column tq_dw.dwdz  is '单位所在地址';
+comment on column tq_dw.jd  is  '经度';
+comment on column tq_dw.wd  is '纬度';
+comment on column tq_dw.remark is '备注';

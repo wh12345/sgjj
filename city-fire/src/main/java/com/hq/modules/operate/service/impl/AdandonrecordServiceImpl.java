@@ -21,10 +21,6 @@ public class AdandonrecordServiceImpl extends ServiceImpl<AdandonrecordDao, Adan
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        /*Page<AdandonrecordEntity> page = this.selectPage(
-                new Query<AdandonrecordEntity>(params).getPage(),
-                new EntityWrapper<AdandonrecordEntity>()
-        );*/
         Page<AdandonrecordEntity> page = this.page(
                 new Query<AdandonrecordEntity>(params).getPage(),
                 new QueryWrapper<AdandonrecordEntity>()

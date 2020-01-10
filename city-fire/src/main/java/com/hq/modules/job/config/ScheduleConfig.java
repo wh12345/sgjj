@@ -1,4 +1,4 @@
-
+package com.hq.modules.job.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

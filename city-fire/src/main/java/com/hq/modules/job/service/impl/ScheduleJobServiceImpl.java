@@ -47,11 +47,6 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
 	@Override
 	public PageUtils queryPage(Map<String, Object> params) {
 		String beanName = (String)params.get("beanName");
-
-		/*Page<ScheduleJobEntity> page = this.selectPage(
-				new Query<ScheduleJobEntity>(params).getPage(),
-				new EntityWrapper<ScheduleJobEntity>().like(StringUtils.isNotBlank(beanName),"bean_name", beanName)
-		);*/
 		Page<ScheduleJobEntity> page = this.page(
 				new Query<ScheduleJobEntity>(params).getPage(),
 				new QueryWrapper<ScheduleJobEntity>().like(StringUtils.isNotBlank(beanName),"bean_name", beanName)
@@ -65,7 +60,6 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
 	public boolean save(ScheduleJobEntity scheduleJob) {
 		scheduleJob.setCreateTime(new Date());
 		scheduleJob.setStatus(Constant.ScheduleStatus.NORMAL.getValue());
-        //this.insert(scheduleJob);
         boolean flag  = super.save(scheduleJob);
         ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
         return  flag;
@@ -87,7 +81,6 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, Schedule
     	}
     	
     	//删除数据
-    	//this.deleteBatchIds(Arrays.asList(jobIds));
 		this.removeByIds(Arrays.asList(jobIds));
 	}
 

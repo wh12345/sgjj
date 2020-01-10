@@ -25,12 +25,6 @@ public class LocationServiceImpl extends ServiceImpl<LocationDao, LocationEntity
     public PageUtils queryPage(Map<String, Object> params) {
         String district = (String) params.get("district");
         String locationName = (String) params.get("locationName");
-        /*Page<LocationEntity> page = this.selectPage(
-                new Query<LocationEntity>(params).getPage(),
-                new EntityWrapper<LocationEntity>()
-                        .where(StringUtils.isNotBlank(district),"district = {0}",district)
-                        .like(StringUtils.isNotBlank(locationName),"location_name",locationName)
-        );*/
         Page<LocationEntity> page = this.page(
                 new Query<LocationEntity>(params).getPage(),
                 new QueryWrapper<LocationEntity>()

@@ -3,7 +3,6 @@
       <el-form :inline="true">
         <el-form-item label-width="30px">
           <el-amap-search-box class="search-box"
-
                               :search-option="searchOption"
                               :on-search-result="onSearchResult">
           </el-amap-search-box>
@@ -29,7 +28,6 @@
       </div>
     <!-- 弹窗, 新增Map -->
     <add-location v-if="addLocationVisible" ref="AddLocation" ></add-location>
-
   </div>
 </template>
 

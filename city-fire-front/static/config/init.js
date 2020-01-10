@@ -18,7 +18,9 @@
       // 业务
       window.SITE_CONFIG.cdnUrl + '/static/js/manifest.js',
       window.SITE_CONFIG.cdnUrl + '/static/js/vendor.js',
-      window.SITE_CONFIG.cdnUrl + '/static/js/app.js'
+      window.SITE_CONFIG.cdnUrl + '/static/js/app.js',
+      //地图
+      window.SITE_CONFIG.cdnUrl + '/static/map/map_loader.js'
     ]
   };
 
